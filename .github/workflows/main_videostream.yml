@@ -46,9 +46,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -58,13 +56,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B61D628A5209433FABD2F03D7AF12D07 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_14414D31DA6B4213AFCEF122EE375499 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0A4983C0CBCE4C788A3C4187663DAD6D }}
-
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
@@ -72,4 +63,4 @@ jobs:
           app-name: 'VideoStream'
           slot-name: 'Production'
           package: .
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5519BB2A5ACA48398FE2B2656B1ED1B5 }}
