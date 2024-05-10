@@ -5,7 +5,12 @@
     <div class="absolute top-0">
         <svg class="fill-current w-4 text-white mt-2 ml-2" viewBox="0 0 24 24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z"/></svg>
     </div>
-    <div wire:loading class="spinner" style="position: absolute;left:90%;top:55%"></div>
+    <div wire:loading
+        class="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+        role="status" style="position: absolute;left:90%;top:10%">
+        <span
+            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+    </div>
     @if(strlen($search) >= 2)
         <div class="absolute bg-orange-800 text-sm rounded w-64 mt-4" x-show.transition.opacity="isOpen" >
             @if ($searchResults->count() > 0)
