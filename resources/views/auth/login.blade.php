@@ -41,6 +41,32 @@
             background-color: #8B0000;
             border-color: #8B0000;
         }
+
+        /* Your existing custom CSS styles */
+        /* Additional styles for the card header */
+        .card-header {
+            font-size:20px;
+            background-color: #450A0A;
+            /* Set background color */
+            color: white;
+            /* Set text color */
+            border-bottom: none;
+            /* Remove bottom border */
+            border-radius: 0;
+            /* Remove border radius */
+            font-weight: bold;
+            /* Set font weight */
+            text-align: center;
+            /* Center align text */
+            padding: 20px;
+            /* Add padding */
+        }
+
+        .card-body {
+            margin-top: 40px;
+            /* Add margin top */
+        }
+
     </style>
     <div class="container" style="height: 83vh;overflow: auto;">
         <div class="row justify-content-center" style="display:flex;justify-content:center;align-items:center;">
@@ -49,11 +75,12 @@
                     style="background-color:rgba(0, 0, 0, .5); border-color: #450A0A;box-shadow: 0 0 30px #450A0A;">
                     <div class="card-header" style="color:white;">{{ __('Login') }}</div>
 
-                    <div class="card-body" style="margin-top:20px;">
+                    <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <div class="row mb-3" style="color:white;margin-bottom:20px;display:flex;justify-content:center;align-items:center;">
+                            <div class="row mb-3"
+                                style="color:white;margin-bottom:20px;display:flex;justify-content:center;align-items:center;">
                                 <label for="username"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
@@ -70,7 +97,8 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3" style="color:white;display:flex;justify-content:center;align-items:center;">
+                            <div class="row mb-3"
+                                style="color:white;display:flex;justify-content:center;align-items:center;">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -108,7 +136,8 @@
                                 </script>
                             </div>
 
-                            <div class="row mb-3" style="color:white;margin-top:30px;display:flex;justify-content:center;align-items:center;">
+                            <div class="row mb-3"
+                                style="color:white;margin-top:30px;display:flex;justify-content:center;align-items:center;">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check" style="display: inline-block;">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
