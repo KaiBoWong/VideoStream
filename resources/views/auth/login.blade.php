@@ -43,17 +43,17 @@
         }
     </style>
     <div class="container" style="height: 83vh;overflow: auto;">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="display:flex;justify-content:center;align-items:center;">
             <div class="col-md-8">
                 <div class="card"
                     style="background-color:rgba(0, 0, 0, .5); border-color: #450A0A;box-shadow: 0 0 30px #450A0A;">
                     <div class="card-header" style="color:white;">{{ __('Login') }}</div>
 
-                    <div class="card-body">
+                    <div class="card-body" style="margin-top:20px;">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <div class="row mb-3" style="color:white;">
+                            <div class="row mb-3" style="color:white;margin-bottom:20px;display:flex;justify-content:center;align-items:center;">
                                 <label for="username"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
@@ -70,12 +70,12 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3" style="color:white;">
+                            <div class="row mb-3" style="color:white;display:flex;justify-content:center;align-items:center;">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                 <div class="col-md-6">
-                                    <div class="input-group">
+                                    <div class="input-group" style="display:flex;justify-content:row;">
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password">
@@ -108,7 +108,7 @@
                                 </script>
                             </div>
 
-                            <div class="row mb-3" style="color:white;">
+                            <div class="row mb-3" style="color:white;margin-top:30px;display:flex;justify-content:center;align-items:center;">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check" style="display: inline-block;">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
@@ -129,7 +129,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
+                            <div class="row mt-4" style="margin-top:20px;">
                                 <div style="display:flex;justify-content:center;align-items:center;">
                                     <button type="submit" class="btn" style="width:100px;">
                                         {{ __('Login') }}
