@@ -45,7 +45,7 @@
         /* Your existing custom CSS styles */
         /* Additional styles for the card header */
         .card-header {
-            font-size:20px;
+            font-size: 20px;
             background-color: #450A0A;
             /* Set background color */
             color: white;
@@ -66,7 +66,6 @@
             margin-top: 40px;
             /* Add margin top */
         }
-
     </style>
     <div class="container" style="height: 83vh;overflow: auto;">
         <div class="row justify-content-center" style="display:flex;justify-content:center;align-items:center;">
@@ -88,12 +87,17 @@
                                     <input id="username" type="username"
                                         class="form-control @error('username') is-invalid @enderror" name="username"
                                         value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                    @error('username')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <!-- New row for the error message -->
+                                    <div class="row mt-1">
+                                        <div style="margin-top:10px;padding-left:15px;">
+                                            @error('username')
+                                                <span class="invalid-feedback" role="alert"
+                                                    style="display: block; font-size: 0.875rem; color: red;">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -110,12 +114,17 @@
 
                                         <button type="button" class="btn btn-outline-secondary" id="togglePassword"><i
                                                 class="fas fa-eye"></i></button>
-
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <!-- New row for the error message -->
+                                        <div class="row mt-1">
+                                            <div style="margin-top:10px;padding-left:15px;">
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert"
+                                                        style="display: block; font-size: 0.875rem; color: red;">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <script>
