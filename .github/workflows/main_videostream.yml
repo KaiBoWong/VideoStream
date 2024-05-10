@@ -29,8 +29,9 @@ jobs:
           
       - name: Install Dedepncencies
         if: steps.check_files.outputs.files_exists == 'true'
-        run: php --version 
-        composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USER }}" "${{ secrets.NOVA_KEY }}"
+        run: 
+          php --version 
+          composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USER }}" "${{ secrets.NOVA_KEY }}"
 
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
