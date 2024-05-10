@@ -57,9 +57,7 @@ class RegisterController extends Controller
             'username.regex' => 'The username cannot contain spaces.',
             'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character and cannot contain spaces.',
             'password.confirmed.regex' => 'The password confirmation does not match.',
-        ])->after(function ($validator) {
-            $validator->errors()->add('username', 'The username cannot be "admin".');
-        });
+        ]);
     }
 
 
