@@ -8,7 +8,7 @@
     <title>Video Streaming</title>
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
     <livewire:styles>
 
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
