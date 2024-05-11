@@ -41,34 +41,24 @@
             background-color: #8B0000;
             border-color: #8B0000;
         }
-
         /* Your existing custom CSS styles */
         /* Additional styles for the card header */
         .card-header {
-            font-size: 20px;
-            background-color: #450A0A;
-            /* Set background color */
-            color: white;
-            /* Set text color */
-            border-bottom: none;
-            /* Remove bottom border */
-            border-radius: 0;
-            /* Remove border radius */
-            font-weight: bold;
-            /* Set font weight */
-            text-align: center;
-            /* Center align text */
-            padding: 20px;
-            /* Add padding */
+            background-color: #450A0A; /* Set background color */
+            color: white; /* Set text color */
+            border-bottom: none; /* Remove bottom border */
+            border-radius: 0; /* Remove border radius */
+            font-weight: bold; /* Set font weight */
+            text-align: center; /* Center align text */
+            padding: 20px; /* Add padding */
         }
 
         .card-body {
-            margin-top: 40px;
-            /* Add margin top */
+            margin-top: 20px; /* Add margin top */
         }
     </style>
     <div class="container" style="height: 83vh;overflow: auto;">
-        <div class="row justify-content-center" style="display:flex;justify-content:center;align-items:center;">
+        <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card"
                     style="background-color:rgba(0, 0, 0, .5); border-color: #450A0A;box-shadow: 0 0 30px #450A0A;">
@@ -78,8 +68,7 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <div class="row mb-3"
-                                style="color:white;margin-bottom:20px;display:flex;justify-content:center;align-items:center;">
+                            <div class="row mb-3" style="color:white;">
                                 <label for="username"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
@@ -87,44 +76,33 @@
                                     <input id="username" type="username"
                                         class="form-control @error('username') is-invalid @enderror" name="username"
                                         value="{{ old('username') }}" required autocomplete="username" autofocus>
-                                    <!-- New row for the error message -->
-                                    <div class="row mt-1">
-                                        <div style="margin-top:10px;padding-left:15px;">
-                                            @error('username')
-                                                <span class="invalid-feedback" role="alert"
-                                                    style="display: block; font-size: 0.875rem; color: red;">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+
+                                    @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
-                            <div class="row mb-3"
-                                style="color:white;display:flex;justify-content:center;align-items:center;">
+                            <div class="row mb-3" style="color:white;">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                 <div class="col-md-6">
-                                    <div class="input-group" style="display:flex;justify-content:row;">
+                                    <div class="input-group">
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password">
 
                                         <button type="button" class="btn btn-outline-secondary" id="togglePassword"><i
                                                 class="fas fa-eye"></i></button>
-                                        <!-- New row for the error message -->
-                                        <div class="row mt-1">
-                                            <div style="margin-top:10px;padding-left:15px;">
-                                                @error('password')
-                                                    <span class="invalid-feedback" role="alert"
-                                                        style="display: block; font-size: 0.875rem; color: red;">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
+
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <script>
@@ -145,8 +123,7 @@
                                 </script>
                             </div>
 
-                            <div class="row mb-3"
-                                style="color:white;margin-top:30px;display:flex;justify-content:center;align-items:center;">
+                            <div class="row mb-3" style="color:white;">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check" style="display: inline-block;">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
@@ -167,7 +144,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-4" style="margin-top:20px;">
+                            <div class="row mt-4">
                                 <div style="display:flex;justify-content:center;align-items:center;">
                                     <button type="submit" class="btn" style="width:100px;">
                                         {{ __('Login') }}
