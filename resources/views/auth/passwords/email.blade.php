@@ -1,66 +1,95 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="height: 83vh;overflow: auto;">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <style>
-                .btn {
-                    background-color: #8B0000;
-                    border-color: #8B0000;
-                    color: white;
-                }
-        
-                a.btn:hover {
-                    background-color: #450A0A;
-                    border-color: #450A0A;
-                    color: white;
-                }
-        
-                .btn:hover {
-                    background-color: #450A0A;
-                    /* Darker blue color on hover */
-                    color: white;
-                }
-            </style>
-            <div class="card" style="background-color:rgba(0, 0, 0, .5); border-color: #450A0A;box-shadow: 0 0 30px #450A0A; color:white;">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <div class="container" style="height: 83vh;overflow: auto;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <style>
+                    .btn {
+                        background-color: #8B0000;
+                        border-color: #8B0000;
+                        color: white;
+                    }
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    a.btn:hover {
+                        background-color: #450A0A;
+                        border-color: #450A0A;
+                        color: white;
+                    }
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+                    .btn:hover {
+                        background-color: #450A0A;
+                        /* Darker blue color on hover */
+                        color: white;
+                    }
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                    /* Your existing custom CSS styles */
+                    /* Additional styles for the card header */
+                    .card-header {
+                        background-color: #450A0A;
+                        /* Set background color */
+                        color: white;
+                        /* Set text color */
+                        border-bottom: none;
+                        /* Remove bottom border */
+                        border-radius: 0;
+                        /* Remove border radius */
+                        font-weight: bold;
+                        /* Set font weight */
+                        text-align: center;
+                        /* Center align text */
+                        padding: 20px;
+                        /* Add padding */
+                    }
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    .card-body {
+                        margin-top: 20px;
+                        /* Add margin top */
+                    }
+                </style>
+                <div class="card"
+                    style="background-color:rgba(0, 0, 0, .5); border-color: #450A0A;box-shadow: 0 0 30px #450A0A; color:white;">
+                    <div class="card-header">{{ __('Reset Password') }}</div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" method="post" action="{{ route('password.email') }}" class="btn">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
+                        <form method="POST" action="{{ route('password.email') }}">
+                            @csrf
+
+                            <div class="row mb-3">
+                                <label for="email"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="email" type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                    </form>
+
+                            <div class="row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" method="post" action="{{ route('password.email') }}"
+                                        class="btn">
+                                        {{ __('Send Password Reset Link') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
