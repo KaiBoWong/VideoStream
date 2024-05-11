@@ -36,7 +36,7 @@ Route::delete('/admin_delete/{user}', [App\Http\Controllers\AdminController::cla
 Route::get('/admin_create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.register');
 Route::post('/admin_create', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.create');
 Route::get('/admin_delete', [App\Http\Controllers\AdminController::class, 'search'])->name('admin.search');
-Route::post('password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
 
 
