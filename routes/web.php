@@ -31,7 +31,7 @@ Route::post('/store-watch-history', [App\Http\Controllers\WatchHistoryController
 Route::get('/watch_history', [App\Http\Controllers\WatchHistoryController::class, 'showWatchHistory'])->name('watch_history');
 Route::delete('/watch_history/{id}', [App\Http\Controllers\WatchHistoryController::class, 'deleteHistory'])->name('delete_history');
 Route::get('/admin_view', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.users.index');
-Route::get('/admin_delete', [App\Http\Controllers\AdminController::class, 'delete'])->name('admin.delete');
+Route::delete('/admin_delete', [App\Http\Controllers\AdminController::class, 'delete'])->name('admin.delete');
 Route::delete('/admin_delete/{user}', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.users.destroy');
 Route::get('/admin_create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.register');
 Route::post('/admin_create', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.create');
