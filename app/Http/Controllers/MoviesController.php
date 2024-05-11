@@ -106,7 +106,7 @@ class MoviesController extends Controller
             }
         }
 
-        return view('movies\show', [
+        return view('movies.show', [
             'movie' => $movie,
             'similar' => $similar,
             'recommendations' => $recommendations,
