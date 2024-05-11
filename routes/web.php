@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 Route::get('/','App\Http\Controllers\MoviesController@index')->name('movies.index');
 Route::get('/movies/{id}', 'App\Http\Controllers\MoviesController@show')->name('movies.show');
@@ -36,8 +38,17 @@ Route::delete('/admin_delete/{user}', [App\Http\Controllers\AdminController::cla
 Route::get('/admin_create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.register');
 Route::post('/admin_create', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.create');
 Route::get('/admin_delete', [App\Http\Controllers\AdminController::class, 'search'])->name('admin.search');
-Route::post('/password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
+Route::post('/password/email', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+ 
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+ 
+    return $status === Password::RESET_LINK_SENT
+                ? back()->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
 
 
 
