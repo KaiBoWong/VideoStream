@@ -358,6 +358,7 @@
                         disableOnInteraction: false,
                         pauseOnMouseEnter: true,
                     },
+                    loop: true, // Enable looping
                     navigation: {
                         nextEl: ".swiper-button-next",
                         prevEl: ".swiper-button-prev",
