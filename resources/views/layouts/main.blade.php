@@ -1,623 +1,431 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Video Streaming</title>
+@section('content')
+    <style>
+        .zoom_prod {
+            height: auto;
+            overflow: hidden;
+            border-radius: 5%;
+            border-color: transparent;
+        }
 
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <livewire:styles>
+        .zoom_prod:hover img {
+            transform: scale(1.15);
+        }
 
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-        <!-- Swiper's JS -->
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet"
-            href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap' />
-        <link rel="stylesheet"
-            href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap' />
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-speech-browser-sdk/1.0.0/microsoft.cognitiveservices.speech.sdk.bundle.js">
-        </script>
-        <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+        .zoom_prod img {
+            transition: transform .5s ease;
+            height: 345px;
+            object-fit: cover;
+        }
 
-        <style>
-            body {
-                font-family: 'Lato', sans-serif;
-                margin: 0;
-            }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
 
-            .maincircle_long {
-                text-transform: uppercase;
-                font-weight: bold;
-                padding: 5px 10px;
-                border-radius: 50px;
-                margin: 5px;
-                display: inline-block;
-                width: 120px;
-                text-align: center;
-                transition: 0.4s ease-in-out;
-                font-size: 16px;
+        .swiper {
+            width: 100%;
+            height: 620px;
+        }
 
-            }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .maincircle_long:hover {
-                text-transform: uppercase;
-                font-weight: bold;
-                padding: 5px 10px;
-                border-radius: 50px;
-                margin: 5px;
-                display: inline-block;
-                width: 120px;
-                text-align: center;
-                color: black;
-                background-color: #fff;
-                font-size: 16px;
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-            }
+        .swiper-pagination-bullet {
+            background: white;
+        }
 
-            /* Modal */
-            .modal {
-                display: none;
-                /* Hidden by default */
-                position: fixed;
-                /* Stay in place */
-                z-index: 1000;
-                /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%;
-                /* Full width */
-                height: 100%;
-                /* Full height */
-                overflow: auto;
-                /* Enable scrolling if needed */
-                background-color: rgba(0, 0, 0, 0.8);
-                /* Black w/ opacity */
-            }
+        .swiper-button-next {
+            font-weight: 900;
+            color: #ff0000;
+        }
 
-            /* Modal Content */
-            .modal-content {
-                box-shadow: 0 6px 20px 0 #333333;
-                /* Adjust the values as needed */
-                border-color: black;
-                /* Adjust the width and color as needed */
-                background: linear-gradient(to bottom, #333333, #000000);
-                margin: 1% auto;
-                /* 15% from the top and centered */
-                padding: 20px;
-                height: 90%;
-                border-radius: 2%;
-                border: 1px solid #888;
-                width: 100%;
-                /* Could be more or less, depending on screen size */
-                max-width: 800px;
-                /* Max width */
-            }
+        .swiper-button-next:hover {
+            font-weight: 900;
+            color: #990000;
+        }
 
-            /* Modal Body */
-            .modal-body {
-                height: calc(100vh - 40px);
-                /* Adjust height to fill the modal */
-                overflow-y: auto;
-                /* Enable vertical scrolling if needed */
-            }
+        .swiper-button-prev {
+            font-weight: 900;
+            color: #ff0000;
+        }
 
-            /* Close Button */
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
+        .swiper-button-prev:hover {
+            font-weight: 900;
+            color: #990000;
+        }
 
-            .close:hover,
-            .close:focus {
-                color: #DC6455;
-                text-decoration: none;
-                cursor: pointer;
-            }
+        .swiper-button-next1 {
+            font-weight: 900;
+            color: #ff0000;
+        }
 
-            .speechimg {
-                background-image: url('/img/voice.png');
-                /* Replace 'img/microphone.png' with your image path */
-                background-size: cover;
-                background-repeat: no-repeat;
-            }
+        .swiper-button-next1:hover {
+            font-weight: 900;
+            color: #990000;
+        }
 
-            .speechimg:hover {
-                background-image: url('/img/voice1.png');
-            }
+        .swiper-button-prev1 {
+            font-weight: 900;
+            color: #ff0000;
+        }
 
-            .record-button {
-                background-color: transparent;
-                border: none;
-                cursor: pointer;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-content: center;
-                border-radius: 50%;
-                /* Make the button circular */
-            }
+        .swiper-button-prev1:hover {
+            font-weight: 900;
+            color: #990000;
+        }
 
-            .record-icon {
-                width: 100px;
-                height: 100px;
-                transition: transform 0.2s ease-in-out;
-                border-radius: 50%;
-                /* Make the button circular */
-            }
+        .swiper-button-next2 {
+            font-weight: 900;
+            color: ##ff0000;
+        }
 
-            .record-button:hover #recordIcon {
-                content: url('/img/voice1.png');
-                /* Change the path to your hover image */
-            }
+        .swiper-button-next2:hover {
+            font-weight: 900;
+            color: #990000;
+        }
 
-            .recording {
-                animation: pulse 1s infinite alternate;
-            }
+        .swiper-button-prev2 {
+            font-weight: 900;
+            color: #ff0000;
+        }
 
-            @keyframes pulse {
-                0% {
-                    transform: scale(1);
-                    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
-                }
+        .swiper-button-prev2:hover {
+            font-weight: 900;
+            color: #990000;
+        }
 
-                25% {
-                    transform: scale(1.2);
-                    box-shadow: 0 0 0 20px rgba(249, 115, 22, 0.3);
-                }
+        .overview-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 10.5em;
+            /* Adjust as needed */
+            transition: max-height 0.3s ease;
+            /* Add smooth transition */
+        }
 
-                50% {
-                    transform: scale(1);
-                    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
-                }
+        /* Show full text when expanded */
+        .overview-text.show-full {
+            max-height: auto;
+        }
 
-                75% {
-                    transform: scale(0.8);
-                    box-shadow: 0 0 0 20px rgba(249, 115, 22, 0.3);
-                }
+        .circle {
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 50px;
+            margin: 5px;
+            display: inline-block;
+            width: 100px;
+            text-align: center;
 
-                100% {
-                    transform: scale(1);
-                    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
-                }
-            }
+        }
 
-            .container1 {
-                position: relative;
-                display: inline-block;
-            }
+        .circle_long {
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 50px;
+            margin: 5px;
+            display: inline-block;
+            width: 150px;
+            text-align: center;
 
-            textarea {
-                width: 500px;
-                height: 50px;
-                background-color: #450A0A;
-                color: white;
-                border-radius: 10px;
-                padding: 10px;
-                font-size: 16px;
-                border: none;
-                box-shadow: 0 6px 10px #F97316;
-            }
+        }
+    </style>
+    <div
+        style="background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 90%), url('/Rectangle 22.png') repeat center top;">
+        <div style="padding-bottom:4rem;">
+            <div class="swiper mySwiper" style="position: relative;">
+                <div class="swiper-wrapper">
+                    @foreach ($popularMovies as $movie)
+                        @if ($loop->index < 5)
+                            @if (strlen($movie['media_type']) == 5)
+                                <div class="swiper-slide">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="position:relative;top:100px;"><img
+                                                        src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['backdrop_path'] }}"
+                                                        alt="movie poster" class="w-full h-full overflow-hidden">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                        style="width:100%;position:absolute;top:20%;transform:translateY(-50%);margin: 0;
+                                        background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);height:1000px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="movie-info">
+                                                                        <div class="container mx-auto px-10 py-16 flex flex-col md:flex-row"
+                                                                            style="display: flex;flex-direction: column;position:absolute;bottom:5%;">
+                                                                            <div class="md:ml-24"
+                                                                                style="width:30%;text-align:justify;font-weight:bold;">
+                                                                                <h2 class="text-5xl mt-4 md:mt-0 mb-4 font-semibold"
+                                                                                    style="color:white;text-align:left;">
+                                                                                    {{ $movie['title'] }}</h2>
+                                                                                <p class="overview-text"
+                                                                                    style="font-family: 'Roboto', sans-serif;color:white;">
+                                                                                    {{ $movie['overview'] }}</p>
+                                                                                <div style="height:20px;"></div>
+                                                                                <div class="text-sm" style="color:white;">
+                                                                                    <span>{{ $movie['genre'] }}</span>
+                                                                                </div>
+                                                                                <div style="height:20px;"></div>
+                                                                                <div
+                                                                                    class="flex flex-wrap items-center text-gray-400 text-sm">
+                                                                                    <svg class="fill-current text-orange-500 w-8"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <g data-name="Layer 2">
+                                                                                            <path
+                                                                                                d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z"
+                                                                                                data-name="star" />
+                                                                                        </g>
+                                                                                    </svg>
+                                                                                    <span class="ml-1"
+                                                                                        style="font-family: 'Roboto', sans-serif;font-weight:bold;font-size:18px;color:white;">{{ $movie['vote_average'] }}</span>
+                                                                                    <span class="mx-2">|</span>
+                                                                                    <span
+                                                                                        class="bg-orange-500 text-gray-900 circle_long">{{ $movie['release_date'] }}</span>
+                                                                                    <span class="mx-2">|</span>
+                                                                                    <span
+                                                                                        class="bg-orange-500 text-gray-900 circle">
+                                                                                        {{ $movie['media_type'] }}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
 
-            .dropdown-content {
-                display: none;
-                /* Initially hide the dropdown */
-                position: absolute;
-                width: 500px;
-                /* Match the width of the textarea */
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                border-radius: 10px;
-                padding: 5px;
-                z-index: 1;
-                top: 60px;
-                /* Adjust this value based on your textarea height and desired spacing */
-            }
+                                                                            <div>
+                                                                                <div class="mt-12 md:ml-24"
+                                                                                    style="text-align:left;">
+                                                                                    <a
+                                                                                        href="{{ route('movies.show', $movie['tmdb_id']) }}">
+                                                                                        <button @click="isOpen = true"
+                                                                                            class="flex inline-flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-orange-600 transition ease-in-out duration-150">
 
-            .dropdown-content a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-            }
+                                                                                            <svg class="w-6 fill-current"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path d="M0 0h24v24H0z"
+                                                                                                    fill="none" />
+                                                                                                <path
+                                                                                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                                                                                            </svg>
+                                                                                            <span
+                                                                                                class="ml-2">Details</span>
+                                                                                        </button>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> <!-- end movie-info -->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:30px;">&nbsp;
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @elseif(strlen($movie['media_type']) <= 2)
+                                <div class="swiper-slide">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="position:relative;top:100px;"><img
+                                                        src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['backdrop_path'] }}"
+                                                        alt="movie poster" class="w-full h-full overflow-hidden">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                        style="width:100%;position:absolute;top:20%;transform:translateY(-50%);margin: 0;
+                                        background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);height:1000px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="movie-info">
+                                                                        <div class="container mx-auto px-10 py-16 flex flex-col md:flex-row"
+                                                                            style="display: flex;flex-direction: column;position:absolute;bottom:5%;">
+                                                                            <div class="md:ml-24"
+                                                                                style="width:30%;font-weight:bold;text-align:justify;">
+                                                                                <h2 class="text-5xl mt-4 md:mt-0 mb-4 font-semibold"
+                                                                                    style="color:white;text-align:left;">
+                                                                                    {{ $movie['title'] }}</h2>
+                                                                                <p class="overview-text"
+                                                                                    style="font-family: 'Roboto', sans-serif;color:white;">
+                                                                                    {{ $movie['overview'] }}</p>
+                                                                                <div style="height:20px;"></div>
+                                                                                <div class="text-sm" style="color:white;">
+                                                                                    <span>{{ $movie['genre'] }}</span>
+                                                                                </div>
+                                                                                <div style="height:20px;"></div>
+                                                                                <div
+                                                                                    class="flex flex-wrap items-center text-gray-400 text-sm">
+                                                                                    <svg class="fill-current text-orange-500 w-8"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <g data-name="Layer 2">
+                                                                                            <path
+                                                                                                d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z"
+                                                                                                data-name="star" />
+                                                                                        </g>
+                                                                                    </svg>
+                                                                                    <span class="ml-1"
+                                                                                        style="font-family: 'Roboto', sans-serif;font-weight:bold;font-size:18px;color:white;">{{ $movie['vote_average'] }}</span>
+                                                                                    <span class="mx-2">|</span>
+                                                                                    <span
+                                                                                        class="bg-orange-500 text-gray-900 circle_long">{{ $movie['release_date'] }}</span>
+                                                                                    <span class="mx-2">|</span>
+                                                                                    <span
+                                                                                        class="bg-orange-500 text-gray-900 circle">
+                                                                                        {{ $movie['media_type'] }}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
 
-            .dropdown-content a:hover {
-                background-color: #ddd;
-            }
+                                                                            <div>
+                                                                                <div class="mt-12 md:ml-24"
+                                                                                    style="text-align:left;">
+                                                                                    <a
+                                                                                        href="{{ route('tv.show', $movie['tmdb_id']) }}">
+                                                                                        <button @click="isOpen = true"
+                                                                                            class="flex inline-flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-orange-600 transition ease-in-out duration-150">
 
-            .no-results {
-                color: #555;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-            }
-
-            #searchButton {
-                width: 120px;
-                height: 50px;
-                background-color: #F97316;
-                color: white;
-                border: none;
-                border-radius: 0 10px 10px 0;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-                box-shadow: 0 6px 10px #450A0A;
-                transition: background-color 0.3s ease;
-            }
-
-            #searchButton:disabled {
-                background-color: #666;
-                cursor: not-allowed;
-            }
-
-            #searchButton:hover:enabled {
-                background-color: #ffae42;
-            }
-
-            #searchButton:active:enabled {
-                background-color: #c34a00;
-            }
-        </style>
-</head>
-
-<body class="font-sans  text-white">
-    <nav class="bg-red-950">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between py-4 shadow-lg"
-            style="width:1200px;">
-            <ul class="flex flex-col md:flex-row items-center">
-                <li>
-                    <a href="{{ route('movies.index') }}">
-                        <img class="w-48" viewBox="0 0 96 24" fill="none" src="{{ URL('/logo 1.png') }}"
-                            alt="" />
-                    </a>
-                </li>
-                <li class=" mt-3 md:mt-0">
-                    <a href="{{ route('trend.index') }}" class="maincircle_long">Movies</a>
-                </li>
-                <li class=" mt-3 md:mt-0">
-                    <a href="{{ route('tv.index') }}" class="maincircle_long">TV Shows</a>
-                </li>
-            </ul>
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="flex items-center">
-                    <!-- Livewire search dropdown -->
-                    <livewire:search-dropdown>
-
-                        <!-- Button to trigger modal -->
-                        <button id="openModalButton" class="mr-4 font-bold py-2 px-4 rounded speechimg"
-                            style="width:35px;height:35px;">
-                        </button>
+                                                                                            <svg class="w-6 fill-current"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <path d="M0 0h24v24H0z"
+                                                                                                    fill="none" />
+                                                                                                <path
+                                                                                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                                                                                            </svg>
+                                                                                            <span
+                                                                                                class="ml-2">Details</span>
+                                                                                        </button>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> <!-- end movie-info -->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:30px;">&nbsp;
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
                 </div>
 
-                <div class="md:ml-4 mt-3 md:mt-0">
-                    @guest
-                        @if (Route::has('login'))
-                            <a href="{{ route('home') }}">
-                                <div
-                                    style="display:flex; flex-direction: column; justify-content:center; align-items:center;">
-                                    <img src="/img/login1.png" alt="login"class="w-10 h-10">
-                                    <p style="font-weight: bold; font-size: 12px;color:#FF5555;" class="w-10">LOGIN</p>
-                                </div>
-                            </a>
-                        @endif
-                    @else
-                        @if (auth()->user()->username === 'admin')
-                            <a href="{{ route('admin.users.index') }}">
-                                <img src="/img/user.png" alt="Admin Dashboard" class="rounded-full w-10 h-10">
-                            </a>
-                        @else
-                            <a href="{{ route('home') }}">
-                                <img src="/img/profile.png" alt="dashboard" class="rounded-full w-10 h-10">
-                            </a>
-                        @endif
-                    @endguest
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+
+            <!-- Swiper JS -->
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+            <!-- Initialize Swiper -->
+            <script>
+                var swiper = new Swiper(".mySwiper", {
+                    spaceBetween: 30,
+                    centeredSlides: true,
+                    autoplay: {
+                        delay: 3500,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                });
+            </script>
+            <div style="background-color: rgba(0, 0, 0, .7);padding-bottom:4rem;">
+                <div class="container mx-auto"
+                    style="display: flex;flex-wrap: wrap;justify-content: center;max-width:1366px;">
+                    <div class="popular-movies px-10 pt-16">
+                        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Popular Movies</h2>
+                        <div style="padding-top:10px;border-bottom: 6px solid orange;width:180px;"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                            @foreach ($Movies as $movie)
+                                @if ($loop->index < 5)
+                                    <x-movie-card :movie="$movie" />
+                                @endif
+                            @endforeach
+                        </div>
+                    </div> <!-- end pouplar-movies -->
+                    <div class="top-rated-movies py-10">
+                        <div class="px-10 pt-16">
+                            <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Top Rated Movies
+                            </h2>
+                            <div style="padding-top:10px;border-bottom: 6px solid orange;width:200px;"></div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                                @foreach ($topmovies as $movie)
+                                    @if ($loop->index < 5)
+                                        <x-movie-card :movie="$movie" />
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div> <!-- end top-rated-movies -->
+                    <div class="popular-tv py-10">
+                        <div class="px-10 pt-16">
+                            <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Popular TV Shows
+                            </h2>
+                            <div style="padding-top:10px;border-bottom: 6px solid orange;width:200px;"></div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                                @foreach ($poptv as $tvshow)
+                                    @if ($loop->index < 5)
+                                        <x-tv-card :tvshow="$tvshow" />
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div> <!-- end popular-tv -->
+                    <div class="top-rated-tv py-10">
+                        <div class="px-10 pt-16">
+                            <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Top Rated TV Show
+                            </h2>
+                            <div style="padding-top:10px;border-bottom: 6px solid orange;width:200px;"></div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                                @foreach ($toptv as $tvshow)
+                                    @if ($loop->index < 5)
+                                        <x-tv-card :tvshow="$tvshow" />
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div> <!-- end top-rated-tv -->
                 </div>
             </div>
         </div>
-    </nav>
-    @yield('content')
-    <footer class="border border-t border-red-950 bg-red-950">
-        <div class="container mx-auto text-sm px-4 py-6">
-            Powered by <a href="https://www.themoviedb.org/documentation/api" class="underline hover:text-gray-300">TMDb
-                API</a>
-        </div>
-    </footer>
-    @yield('scripts')
-    <livewire:scripts>
-
-        <!-- Modal -->
-        <!-- Full-page modal -->
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="modal-body" style="position:relative;">
-                    <!-- Your modal content goes here -->
-                    <!-- <uidiv> -->
-                    <div id="warning">
-                        <h1 style="font-weight:500;">Speech Recognition Speech SDK not found
-                            (microsoft.cognitiveservices.speech.sdk.bundle.js missing).</h1>
-                    </div>
-
-                    <div id="content"
-                        style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
-                            <img style="width: 5%;" src="/img/warning.png" />
-                            <div style="margin-left: 10px;">Please Click the Search Button to show more results
-                            </div>
-                        </div>
-
-                        <div style="display: flex; justify-content: center; align-items: center;">
-                            <div class="container1">
-                                <div
-                                    style="display: flex; align-items: center; border: 1px solid #ced4da; border-radius: 5px; padding: 5px;">
-                                    <div style="display: flex; align-items: center;">
-                                        <input id="phraseDiv" placeholder="Type something..."
-                                            style="width: 500px; height: 50px; background-color: #450A0A; color: white; border-radius: 10px 0 0 10px; padding: 10px; font-size: 16px; border: none;;">
-                                        <button id="searchButton" disabled>Search</button>
-                                    </div>
-
-                                </div>
-                                <div class="dropdown-content" id="dropdown"></div>
-                            </div>
-                        </div>
-
-                        <div
-                            style="display: flex; flex-direction: column; justify-content: center; align-items: center;height:300px;margin-top:100px;">
-                            <div id="recordingText"
-                                style="display: none; color: white; font-size: 28px; margin-bottom: 50px;">
-                                Listening
-                            </div>
-                            <button id="startRecognizeOnceAsyncButton" class="record-button"
-                                onclick="toggleRecording()">
-                                <img id="recordIcon" src="/img/voice.png" alt="Record" class="record-icon">
-                            </button>
-                        </div>
-
-                    </div>
-
-
-                    <!-- </uidiv> -->
-
-                    <div id="content" style="display:none">
-                        <!-- Speech SDK reference sdk. -->
-                        <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
-
-                        <!-- Speech SDK USAGE -->
-                        <script>
-                            document.getElementById('searchButton').addEventListener('click', function() {
-                                const searchData = document.getElementById('phraseDiv').value.trim();
-
-                                if (searchData !== "" && searchData.length >= 2) {
-                                    // Redirect to the search page with the input value as a parameter
-                                    window.location.href = "/search/" + encodeURIComponent(searchData);
-                                }
-                            });
-
-                            function toggleRecording() {
-                                var button = document.getElementById("startRecognizeOnceAsyncButton");
-                                var icon = document.getElementById("recordIcon");
-                                var recordingText = document.getElementById("recordingText");
-                                var phraseDiv = document.getElementById("phraseDiv");
-
-                                // Start animation regardless of textarea content
-                                button.style.animation = "pulse 1s infinite"; // Add animation class
-                                icon.src = "/img/voice.png"; // Change to finish icon
-                                recordingText.style.display = "block"; // Hide the text
-                            }
-
-                            // status fields and start button in UI
-                            var phraseDiv;
-                            var startRecognizeOnceAsyncButton;
-
-                            // subscription key and region for speech services.
-                            var subscriptionKey = "9fa2ebe6640a4006a62cea54b9a1f065";
-                            var serviceRegion = "eastus";
-                            var SpeechSDK;
-                            var recognizer;
-
-                            var icon = document.getElementById("recordIcon");
-                            var recordingText = document.getElementById("recordingText");
-                            var button = document.getElementById("startRecognizeOnceAsyncButton");
-
-                            document.addEventListener("DOMContentLoaded", function() {
-                                startRecognizeOnceAsyncButton = document.getElementById("startRecognizeOnceAsyncButton");
-                                phraseDiv = document.getElementById("phraseDiv");
-
-                                startRecognizeOnceAsyncButton.addEventListener("click", function() {
-                                    startRecognizeOnceAsyncButton.disabled = true;
-                                    phraseDiv.focus(); // Focus on the textarea
-
-                                    var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
-                                    speechConfig.speechRecognitionLanguage = "en-US";
-                                    var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
-                                    recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
-
-                                    recognizer.recognizeOnceAsync(
-                                        function(result) {
-                                            startRecognizeOnceAsyncButton.disabled = false;
-                                            // Split recognized text into words, trim dots from each word, and join them without separators
-                                            phraseDiv.value = result.text.split(' ').map(word => word.replace(/\./g,
-                                                '')).join(' ');
-                                            window.console.log(result);
-
-                                            recognizer.close();
-                                            recognizer = undefined;
-                                            recordingText.style.display = "none"; // Hide the text
-                                            button.style.animation = "none";
-                                            searchButton.disabled = false;
-
-                                            searchTMDB(phraseDiv.value, function(results) {
-                                                displayResults(results.slice(0, 7)); // Display the results
-
-                                            });
-                                        },
-                                        function(err) {
-                                            startRecognizeOnceAsyncButton.disabled = false;
-                                            // Concatenate the error message without separators
-                                            phraseDiv.value = "Please Try Again!";
-                                            window.console.log(err);
-
-                                            recognizer.close();
-                                            recognizer = undefined;
-                                            recordingText.style.display = "none"; // Hide the text
-                                            button.style.animation = "none";
-
-                                            var dropdown = document.getElementById('dropdown');
-                                            dropdown.innerHTML =
-                                                ''; // Clear dropdown if search text is less than 2 characters
-                                            dropdown.style.display = 'none'; // Hide the dropdown
-                                            searchButton.disabled = true; // Enable the search button
-                                        });
-                                });
-
-                                if (!!window.SpeechSDK) {
-                                    SpeechSDK = window.SpeechSDK;
-                                    startRecognizeOnceAsyncButton.disabled = false;
-
-                                    document.getElementById('content').style.display = 'block';
-                                    document.getElementById('warning').style.display = 'none';
-                                }
-                            });
-
-
-
-                            function searchTMDB(query, callback) {
-                                // Replace 'YOUR_API_KEY' with your actual TMDB API key
-                                var apiKey = '1cf50e6248dc270629e802686245c2c8';
-                                var url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(query)}`;
-                                var xhr = new XMLHttpRequest();
-                                xhr.onreadystatechange = function() {
-                                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                                        if (xhr.status === 200) {
-                                            var response = JSON.parse(xhr.responseText);
-                                            callback(response.results);
-                                        } else {
-                                            console.error('Error fetching data from TMDB API');
-                                        }
-                                    }
-                                };
-                                xhr.open('GET', url, true);
-                                xhr.send();
-                            }
-
-                            function displayResults(results) {
-                                var dropdown = document.getElementById('dropdown');
-                                dropdown.innerHTML = ''; // Clear previous results
-
-                                if (results && results.length > 0) {
-                                    results.slice(0, 7).forEach(function(result) {
-                                        var title = result.title || result.name; // Use title for movies and name for TV shows
-                                        var id = result.id;
-                                        var mediaType = result.media_type;
-                                        var listItem = document.createElement('a');
-                                        listItem.textContent = title;
-                                        if (mediaType === 'tv') {
-                                            listItem.href = '/tv/' + id;
-                                        } else {
-                                            listItem.href = '/movies/' + id;
-                                        }
-                                        listItem.addEventListener('click', function(event) {
-                                            event.preventDefault(); // Prevent default link behavior
-                                            window.location.href = listItem.href; // Redirect to the specified URL
-                                        });
-                                        dropdown.appendChild(listItem);
-                                    });
-                                    dropdown.style.display = 'block'; // Show the dropdown
-
-                                    // Create a div to contain the button and other content
-                                    var showLessContainer = document.createElement('div');
-
-                                    // Add styling to the container
-                                    showLessContainer.style.display = 'flex';
-                                    showLessContainer.style.alignItems = 'center';
-                                    showLessContainer.style.justifyContent = 'center'; // Center content horizontally
-                                    showLessContainer.style.marginTop = '10px'; // Adjust margin as needed
-                                    showLessContainer.style.transition = 'background-color 0.3s'; // Transition effect
-
-                                    // Create the "Show Less" button
-                                    var showLessButton = document.createElement('button');
-                                    showLessButton.textContent = 'Show Less';
-                                    showLessButton.style.color = 'black'; // Text color
-                                    showLessButton.style.backgroundColor = '#FFFFFF'; // Background color
-                                    showLessButton.style.border = '1px solid black'; // Border
-                                    showLessButton.style.borderRadius = '5px'; // Border radius
-                                    showLessButton.style.padding = '5px 10px'; // Padding
-
-                                    // Add event listeners to the button for hover effect
-                                    showLessButton.addEventListener('mouseenter', function() {
-                                        showLessButton.style.backgroundColor = 'orange'; // Change background color on hover to orange
-                                    });
-                                    showLessButton.addEventListener('mouseleave', function() {
-                                        showLessButton.style.backgroundColor =
-                                            '#FFFFFF'; // Revert back to original background color on mouse leave
-                                    });
-                                    showLessButton.addEventListener('click', function() {
-                                        dropdown.innerHTML = ''; // Clear dropdown
-                                        dropdown.style.display = 'none'; // Hide the dropdown
-                                    });
-
-                                    // Append the button to the container
-                                    showLessContainer.appendChild(showLessButton);
-
-                                    // Append the container to the dropdown
-                                    dropdown.appendChild(showLessContainer);
-                                } else {
-                                    dropdown.innerHTML = '<a class="no-results">No results found</a>';
-                                    dropdown.style.display = 'block'; // Show the dropdown with "No results found" message
-                                }
-                            }
-                        </script>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal body script -->
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Get the modal element
-                var modal = document.getElementById("myModal");
-
-                // Get the button that opens the modal
-                var btn = document.getElementById("openModalButton");
-
-                // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];
-
-                // When the user clicks the button, open the modal
-                btn.onclick = function() {
-                    modal.style.display = "block";
-                    phraseDiv.value = ''; // Clear previous results
-                    dropdown.innerHTML = '';
-                    dropdown.style.display = 'none'; // Show the dropdown with "No results found" message
-                }
-
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function() {
-                    modal.style.display = "none";
-                    recordingText.style.display = "none"; // Hide the text
-                    button.style.animation = "none";
-                    recognizer.close();
-                }
-
-                // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                }
-            });
-        </script>
-</body>
-
-</html>
+    </div>
+@endsection
