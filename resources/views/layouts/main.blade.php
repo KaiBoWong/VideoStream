@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <livewire:styles>
-
+        <link rel="icon" href="/streaming.png" type="image/x-icon">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <!-- Swiper's JS -->
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -267,6 +267,63 @@
             #searchButton:active:enabled {
                 background-color: #c34a00;
             }
+
+            #showMoreButton {
+                display: none;
+                /* Initially hidden */
+                color: black;
+                /* Text color */
+                background-color: #FFFFFF;
+                /* Background color */
+                border: 1px solid black;
+                /* Border */
+                border-radius: 5px;
+                /* Border radius */
+                padding: 5px 10px;
+                /* Padding */
+            }
+
+            #showMoreButton:hover {
+                background-color: orange;
+                /* Change background color on hover to orange */
+                color: white;
+                /* Text color */
+            }
+
+            .maincircle_nav {
+                font-weight: bold;
+                border-radius: 50px;
+                margin: 5px;
+                display: inline-block;
+                width: 150px;
+                text-align: center;
+                transition: 0.4s ease-in-out;
+                color: white;
+                font-family: 'Lato', sans-serif;
+
+            }
+
+            .maincircle_nav:hover {
+                font-weight: bold;
+                border-radius: 50px;
+                margin: 5px;
+                display: inline-block;
+                width: 150px;
+                background-color: #fff;
+                color: black;
+                font-family: 'Lato', sans-serif;
+            }
+
+            .dropdown::after {
+                display: inline-block;
+                margin-left: 0.7em;
+                vertical-align: 0.255em;
+                content: "";
+                border-top: 0.3em solid;
+                border-right: 0.3em solid transparent;
+                border-bottom: 0;
+                border-left: 0.3em solid transparent;
+            }
         </style>
 </head>
 
@@ -312,14 +369,73 @@
                         @endif
                     @else
                         @if (auth()->user()->username === 'admin')
-                            <a href="{{ route('admin.users.index') }}">
-                                <img src="/img/user.png" alt="Admin Dashboard" class="rounded-full w-10 h-10">
-                            </a>
+                            <div id="dropdown-toggle" class="relative maincircle_nav" style="cursor: pointer;">
+                                <a style=" text-transform: uppercase;"
+                                    class="inline-flex items-center justify-center w-10 h-8 dropdown" href="#"
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    v-pre>
+                                    {{ Auth::user()->username }}
+                                </a>
+                                <div id="dropdown-menu"
+                                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
+                                    <div class="py-1" role="menu" aria-orientation="vertical"
+                                        aria-labelledby="options-menu">
+                                        <a href="{{ route('admin.users.index') }}"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-900 hover:text-gray-100"
+                                            role="menuitem">Admin Dashboard</a>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-900 hover:text-gray-100"
+                                            role="menuitem">{{ __('Logout') }}</a>
+                                        <!-- Add more dropdown items here -->
+                                    </div>
+                                </div>
+                            </div>
                         @else
-                            <a href="{{ route('home') }}">
-                                <img src="/img/profile.png" alt="dashboard" class="rounded-full w-10 h-10">
-                            </a>
+                            <div id="dropdown-toggle" class="relative maincircle_nav" style="cursor: pointer;">
+                                <a style=" text-transform: uppercase;font-family: 'Lato', sans-serif;"
+                                    class="inline-flex items-center justify-center w-10 h-8 dropdown" href="#"
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    v-pre>
+                                    {{ Auth::user()->username }}
+                                </a>
+                                <div id="dropdown-menu"
+                                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
+                                    <div class="py-1" role="menu" aria-orientation="vertical"
+                                        aria-labelledby="options-menu">
+                                        <a href="{{ route('home') }}"
+                                            class="block px-2 py-2 text-sm text-gray-700 hover:bg-red-900 hover:text-gray-100"
+                                            role="menuitem">User Profile Dashboard</a>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                            class="block px-2 py-2 text-sm text-gray-700 hover:bg-red-900 hover:text-gray-100"
+                                            role="menuitem">{{ __('Logout') }}</a>
+                                        <!-- Add more dropdown items here -->
+                                    </div>
+                                </div>
+                            </div>
                         @endif
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
+                        <script>
+                            document.getElementById('dropdown-toggle').addEventListener('click', function(event) {
+                                var dropdownMenu = document.getElementById('dropdown-menu');
+                                dropdownMenu.classList.toggle('hidden');
+                                event.stopPropagation(); // Prevent the click event from propagating to the document body
+                            });
+
+                            document.addEventListener('click', function(event) {
+                                var dropdownMenu = document.getElementById('dropdown-menu');
+                                var dropdownToggle = document.getElementById('dropdown-toggle');
+
+                                // If the clicked element is not part of the dropdown menu or its toggle button, hide the dropdown menu
+                                if (!dropdownMenu.contains(event.target) && event.target !== dropdownToggle) {
+                                    dropdownMenu.classList.add('hidden');
+                                }
+                            });
+                        </script>
                     @endguest
                 </div>
             </div>
@@ -328,7 +444,8 @@
     @yield('content')
     <footer class="border border-t border-red-950 bg-red-950">
         <div class="container mx-auto text-sm px-4 py-6">
-            Powered by <a href="https://www.themoviedb.org/documentation/api" class="underline hover:text-gray-300">TMDb
+            Powered by <a href="https://www.themoviedb.org/documentation/api"
+                class="underline hover:text-gray-300">TMDb
                 API</a>
         </div>
     </footer>
@@ -368,6 +485,7 @@
 
                                 </div>
                                 <div class="dropdown-content" id="dropdown"></div>
+                                <button id="showMoreButton">Show More</button>
                             </div>
                         </div>
 
@@ -394,6 +512,8 @@
 
                         <!-- Speech SDK USAGE -->
                         <script>
+                            const showMoreButton = document.getElementById('showMoreButton');
+
                             document.getElementById('searchButton').addEventListener('click', function() {
                                 const searchData = document.getElementById('phraseDiv').value.trim();
 
@@ -556,14 +676,24 @@
                                     // Add event listeners to the button for hover effect
                                     showLessButton.addEventListener('mouseenter', function() {
                                         showLessButton.style.backgroundColor = 'orange'; // Change background color on hover to orange
+                                        showLessButton.style.color = 'white'; // Text color
+                                        showLessButton.style.border = '1px solid transparent'; // Border
                                     });
                                     showLessButton.addEventListener('mouseleave', function() {
-                                        showLessButton.style.backgroundColor =
-                                            '#FFFFFF'; // Revert back to original background color on mouse leave
+                                        showLessButton.style.color = 'black'; // Text color
+                                        showLessButton.style.backgroundColor = '#FFFFFF'; // Background color
+                                        showLessButton.style.border = '1px solid black'; // Border
                                     });
                                     showLessButton.addEventListener('click', function() {
-                                        dropdown.innerHTML = ''; // Clear dropdown
                                         dropdown.style.display = 'none'; // Hide the dropdown
+                                        // Show the show more button
+                                        showMoreButton.style.display = 'block';
+                                    });
+
+                                    showMoreButton.addEventListener('click', function() {
+                                        // Assume that `results` is accessible here, otherwise pass it or fetch it again as needed
+                                        dropdown.style.display = 'block'; // Show the dropdown with "No results found" message
+                                        showMoreButton.style.display = 'none'; // Hide the "Show More" button
                                     });
 
                                     // Append the button to the container
@@ -594,12 +724,15 @@
                 // Get the <span> element that closes the modal
                 var span = document.getElementsByClassName("close")[0];
 
+                const showMoreButton = document.getElementById('showMoreButton');
+
                 // When the user clicks the button, open the modal
                 btn.onclick = function() {
                     modal.style.display = "block";
                     phraseDiv.value = ''; // Clear previous results
                     dropdown.innerHTML = '';
                     dropdown.style.display = 'none'; // Show the dropdown with "No results found" message
+                    showMoreButton.style.display = 'none'; // Hide the "Show More" button
                 }
 
                 // When the user clicks on <span> (x), close the modal
