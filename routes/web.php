@@ -23,6 +23,8 @@ Route::get('/search/{search}', 'App\Http\Controllers\SearchController@show')->na
 
 
 
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -38,6 +40,14 @@ Route::delete('/admin_delete/{user}', [App\Http\Controllers\AdminController::cla
 Route::get('/admin_create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.register');
 Route::post('/admin_create', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.create');
 Route::get('/admin_delete', [App\Http\Controllers\AdminController::class, 'search'])->name('admin.search');
+Route::get('/user_list', [App\Http\Controllers\AdminController::class, 'list'])->name('admin.list');
+// Route to display the password change form
+Route::get('/admin_change-password', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.change_password');
+
+// Route to handle the password change form submission
+Route::post('/admin_change-password', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.change_password.update');
+
+
 
 
 
