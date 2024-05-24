@@ -15,15 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('username')->nullable();
             $table->string('title')->nullable();
-            $table->text('overview')->nullable();
-            $table->date('release_date')->nullable();
             $table->string('genre')->nullable(); // Assuming genre can be nullable
-            $table->string('backdrop_path')->nullable();
-            $table->decimal('vote_average', 4, 2)->nullable();
             $table->string('poster_path')->nullable();
             $table->string('media_type')->nullable();
             $table->unsignedBigInteger('tmdb_id')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
