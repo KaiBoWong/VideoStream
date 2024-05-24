@@ -62,7 +62,7 @@ class SearchController extends Controller
 
         //dump($searchResults);
 
-        return view('search\show', [
+        return view('search.show', [
             'searchResults' => $searchResults,
             'genres' => $genres,
             'genrestv' => $genrestv,

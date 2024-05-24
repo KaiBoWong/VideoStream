@@ -22,17 +22,23 @@ class MoviesController extends Controller
     public function index()
     {
         // Retrieve popular movies from the database
-        $popularMovies = tv_movies::all();
-        $Movies = movies_populars::all();
-        $topmovies = movies_tops::all();
-        $poptv = pop_tvs::all();
-        $toptv = top_tvs::all();
+        $popularvideo = tv_movies::all();
+        $Movies = tv_movies::where('media_type', 'movie')->get();
+        $topmovies = tv_movies::where('media_type', 'movie')
+            ->where('release_date', '<', '2019-01-01')
+            ->orderBy('vote_average', 'desc')
+            ->get();
+        $poptv = tv_movies::where('media_type', 'tv')->get();
+        $toptv = tv_movies::where('media_type', 'tv')
+            ->whereBetween('release_date', ['1990-01-01', '2019-01-01'])
+            ->where('vote_average', 8.5) // Make sure to use a number, not a string
+            ->get();
 
         //dump($movie);
 
         // Pass the retrieved data to the view
         return view('movies.index', [
-            'popularMovies' => $popularMovies,
+            'popularvideo' => $popularvideo,
             'Movies' => $Movies,
             'topmovies' => $topmovies,
             'poptv' => $poptv,
@@ -93,7 +99,6 @@ class MoviesController extends Controller
                 // Handle existing record
                 $existingHistory->updated_at = now();
                 $existingHistory->save();
-                
             } else {
                 WatchHistory::create([
                     'username' => $user->username,
@@ -106,7 +111,7 @@ class MoviesController extends Controller
             }
         }
 
-        return view('movies\show', [
+        return view('movies.show', [
             'movie' => $movie,
             'similar' => $similar,
             'recommendations' => $recommendations,

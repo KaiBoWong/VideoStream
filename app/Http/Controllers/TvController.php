@@ -40,7 +40,7 @@ class TvController extends Controller
         //dump($filterFantasy);
 
 
-        return view('tv\index', [
+        return view('tv.index', [
             'genres' => $genres,
             'genrestv' => $genrestv,
         ]);
@@ -114,7 +114,7 @@ class TvController extends Controller
             }
         }
 
-        return view('tv\show', [
+        return view('tv.show', [
             'tvshow' => $tvshow,
             'similar' => $similar,
             'recommendations' => $recommendations,

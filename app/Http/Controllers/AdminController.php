@@ -17,6 +17,18 @@ class AdminController extends Controller
         return view('admin_view');
     }
 
+    public function list(User $user)
+    {
+        // Retrieve paginated user data ordered by creation date
+        $users = User::latest('created_at')->paginate(10); // Change the number 10 to the desired number of users per page
+
+        // Pass the paginated user data to the Blade view
+        return view('user_list', [
+            'users' => $users,
+            'hasMorePages' => $users->hasMorePages()
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -69,17 +81,58 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        return view('admin_change-password');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'username' => ['required', 'string', 'max:255', 'exists:users,username', 'regex:/^\S*$/'],
+            'new_password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?!\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])\S*(?<!\s)$/'],
+            'new_password_confirmation' => ['required', 'string', 'min:8'],
+        ], [
+            // Custom error messages
+            'new_password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character and cannot contain spaces.',
+            'new_password_confirmation.regex' => 'The new password and confirmation password do not match.',
+        ]);
+
+        // Find the user by username
+        $user = User::where('username', $request->username)->first();
+
+        // If user is not found, return with an error message
+        if (!$user) {
+            return back()->withInput()->with('error', 'Username not found.');
+        }
+
+        // Check if the username is "admin"
+        if ($request->username === 'admin') {
+            return back()->withInput()->with('error', 'Password for the Admin cannot be changed.');
+        }
+
+        // Check if the new password is the same as the old one
+        if (Hash::check($request->new_password, $user->password)) {
+            // If the new password is the same as the old one, return with an error message
+            return back()->withInput()->with('error', 'New password cannot be the same as the old password.');
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $saveResult = $user->save();
+
+        // Check if the password was updated successfully
+        if ($saveResult) {
+            // Password updated successfully
+            return redirect()->route('admin.change_password')->with('success', 'Password changed successfully.');
+        } else {
+            // Password update failed
+            return back()->withInput()->with('error', 'Failed to update password.');
+        }
     }
 
     /**

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 Route::get('/','App\Http\Controllers\MoviesController@index')->name('movies.index');
 Route::get('/movies/{id}', 'App\Http\Controllers\MoviesController@show')->name('movies.show');
@@ -21,6 +23,8 @@ Route::get('/search/{search}', 'App\Http\Controllers\SearchController@show')->na
 
 
 
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -31,11 +35,18 @@ Route::post('/store-watch-history', [App\Http\Controllers\WatchHistoryController
 Route::get('/watch_history', [App\Http\Controllers\WatchHistoryController::class, 'showWatchHistory'])->name('watch_history');
 Route::delete('/watch_history/{id}', [App\Http\Controllers\WatchHistoryController::class, 'deleteHistory'])->name('delete_history');
 Route::get('/admin_view', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.users.index');
-Route::get('/admin_delete', [App\Http\Controllers\AdminController::class, 'delete'])->name('admin.delete');
+Route::delete('/admin_delete', [App\Http\Controllers\AdminController::class, 'delete'])->name('admin.delete');
 Route::delete('/admin_delete/{user}', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.users.destroy');
 Route::get('/admin_create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.register');
 Route::post('/admin_create', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.create');
 Route::get('/admin_delete', [App\Http\Controllers\AdminController::class, 'search'])->name('admin.search');
+Route::get('/user_list', [App\Http\Controllers\AdminController::class, 'list'])->name('admin.list');
+// Route to display the password change form
+Route::get('/admin_change-password', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.change_password');
+
+// Route to handle the password change form submission
+Route::post('/admin_change-password', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.change_password.update');
+
 
 
 

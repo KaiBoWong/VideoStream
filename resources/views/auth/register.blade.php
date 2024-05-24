@@ -20,6 +20,21 @@
             border-color: #450A0A;
             color: white;
         }
+        /* Your existing custom CSS styles */
+        /* Additional styles for the card header */
+        .card-header {
+            background-color: #450A0A; /* Set background color */
+            color: white; /* Set text color */
+            border-bottom: none; /* Remove bottom border */
+            border-radius: 0; /* Remove border radius */
+            font-weight: bold; /* Set font weight */
+            text-align: center; /* Center align text */
+            padding: 20px; /* Add padding */
+        }
+
+        .card-body {
+            margin-top: 20px; /* Add margin top */
+        }
     </style>
     <div class="container" style="height: 80vh;overflow: auto;">
         <div class="row justify-content-center">

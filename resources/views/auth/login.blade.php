@@ -41,6 +41,21 @@
             background-color: #8B0000;
             border-color: #8B0000;
         }
+        /* Your existing custom CSS styles */
+        /* Additional styles for the card header */
+        .card-header {
+            background-color: #450A0A; /* Set background color */
+            color: white; /* Set text color */
+            border-bottom: none; /* Remove bottom border */
+            border-radius: 0; /* Remove border radius */
+            font-weight: bold; /* Set font weight */
+            text-align: center; /* Center align text */
+            padding: 20px; /* Add padding */
+        }
+
+        .card-body {
+            margin-top: 20px; /* Add margin top */
+        }
     </style>
     <div class="container" style="height: 83vh;overflow: auto;">
         <div class="row justify-content-center">
@@ -163,7 +178,7 @@
                             <table style="width:60%;text-align:center;">
                                 <tbody>
                                     <tr>
-                                        <td>DON'T HAVE ACCOUNT?<a class="reg" style="margin-left:10px;"
+                                        <td>DON'T HAVE ACCOUNT?<a class="reg" style="font-weight:bold;margin-left:10px;text-decoration:underline;"
                                                 href="{{ route('register') }}">REGISTER NOW</a>
                                         </td>
                                     </tr>

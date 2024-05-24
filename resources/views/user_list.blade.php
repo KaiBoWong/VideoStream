@@ -167,7 +167,14 @@
                 </form>
             </div>
         </div>
-        @if ($users->isEmpty() || ($users->count() === 1 && $users->first()->username === 'admin'))
+        <div class="my-4" style="width:100%;display:flex;justify-content:left;align-items:left;color:white;">
+            <div>
+                <a href="{{ route('admin.register') }}" class="btn">
+                    <i style="margin-right:10px;" class="fas fa-plus"></i> {{ __('Create User') }}
+                </a>
+            </div>
+        </div>
+        @if ($users->isEmpty())
             <div class="watch-history-container" style="padding-bottom:100px;height: 80vh;overflow: auto;">
                 <table class="details">
                     <tbody>
@@ -211,31 +218,16 @@
                             <th><strong>
                                     Time
                                 </strong></th>
-                            <th><strong>
-                                    Action
-                                </strong></th>
-                            </th>
                         </tr>
                         @php $startIndex = 1; @endphp
                         @foreach ($users as $index => $user)
-                            @if ($user->username !== 'admin')
-                                <tr>
-                                    <td scope="row">{{ $startIndex++ }}</th>
-                                    <td>{{ $user->username }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->created_at->format('Y-m-d H:i:s') }}</td>
-                                    <td>
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="delete-btn"
-                                                onclick="confirmDelete('{{ $user->username }}')">
-                                                <img src="/img/recycle-bin.png" alt="Delete" style="max-width: 50px;">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endif
+                            <tr>
+                                <td style="padding-top:20px;padding-bottom:20px;" scope="row">{{ $startIndex++ }}</th>
+                                <td style="padding-top:20px;padding-bottom:20px;">{{ $user->username }}</td>
+                                <td style="padding-top:20px;padding-bottom:20px;">{{ $user->email }}</td>
+                                <td style="padding-top:20px;padding-bottom:20px;">
+                                    {{ $user->created_at->format('Y-m-d H:i:s') }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

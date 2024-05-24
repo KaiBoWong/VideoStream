@@ -35,7 +35,7 @@ class MoviesTrenController extends Controller
         //dump($filterFantasy);
 
 
-        return view('trending\index', [
+        return view('trending.index', [
             'genres' => $genres,
             'genrestv' => $genrestv,
         ]);
@@ -107,7 +107,7 @@ class MoviesTrenController extends Controller
             }
         }
 
-        return view('trending\show', [
+        return view('trending.show', [
             'Trendmovie' => $Trendmovie,
             'similar' => $similar,
             'recommendations' => $recommendations,

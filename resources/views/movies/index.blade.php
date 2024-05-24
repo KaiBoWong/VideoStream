@@ -153,8 +153,8 @@
         <div style="padding-bottom:4rem;">
             <div class="swiper mySwiper" style="position: relative;">
                 <div class="swiper-wrapper">
-                    @foreach ($popularMovies as $movie)
-                        @if ($loop->index < 10)
+                    @foreach ($popularvideo as $movie)
+                        @if ($loop->index < 5)
                             @if (strlen($movie['media_type']) == 5)
                                 <div class="swiper-slide">
                                     <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
@@ -358,6 +358,7 @@
                         disableOnInteraction: false,
                         pauseOnMouseEnter: true,
                     },
+                    loop: true, // Enable looping
                     navigation: {
                         nextEl: ".swiper-button-next",
                         prevEl: ".swiper-button-prev",
@@ -376,7 +377,7 @@
                         <div style="padding-top:10px;border-bottom: 6px solid orange;width:180px;"></div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                             @foreach ($Movies as $movie)
-                                @if ($loop->index < 10)
+                                @if ($loop->index < 5)
                                     <x-movie-card :movie="$movie" />
                                 @endif
                             @endforeach
@@ -389,7 +390,7 @@
                             <div style="padding-top:10px;border-bottom: 6px solid orange;width:200px;"></div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                                 @foreach ($topmovies as $movie)
-                                    @if ($loop->index < 10)
+                                    @if ($loop->index < 5)
                                         <x-movie-card :movie="$movie" />
                                     @endif
                                 @endforeach
@@ -403,7 +404,7 @@
                             <div style="padding-top:10px;border-bottom: 6px solid orange;width:200px;"></div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                                 @foreach ($poptv as $tvshow)
-                                    @if ($loop->index < 10)
+                                    @if ($loop->index < 5)
                                         <x-tv-card :tvshow="$tvshow" />
                                     @endif
                                 @endforeach
@@ -417,7 +418,7 @@
                             <div style="padding-top:10px;border-bottom: 6px solid orange;width:200px;"></div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                                 @foreach ($toptv as $tvshow)
-                                    @if ($loop->index < 10)
+                                    @if ($loop->index < 5)
                                         <x-tv-card :tvshow="$tvshow" />
                                     @endif
                                 @endforeach

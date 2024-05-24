@@ -36,6 +36,13 @@
                             </div>
                             <div class="row">
                                 <div style="display:flex;justify-content:center;align-items:center;">
+                                    <a href="{{ route('admin.list') }}" class="btn" style="width:200px;">
+                                        {{ __('User List') }}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row pt-4">
+                                <div style="display:flex;justify-content:center;align-items:center;">
                                     <a href="{{ route('admin.register') }}" class="btn" style="width:200px;">
                                         {{ __('Create User') }}
                                     </a>
@@ -43,18 +50,25 @@
                             </div>
                             <div class="row pt-4">
                                 <div style="display:flex;justify-content:center;align-items:center;">
-                                    <a href="{{ route('admin.delete') }}" class="btn" style="width:200px;">
-                                        {{ __('Delete User') }}
+                                    <a href="{{ route('admin.change_password') }}" class="btn" style="width:200px;">
+                                        {{ __('Update User Password') }}
                                     </a>
                                 </div>
                             </div>
                             <div class="row py-4">
                                 <div style="display:flex;justify-content:center;align-items:center;">
+                                    <a href="{{ route('admin.delete') }}" class="btn" style="width:200px;">
+                                        {{ __('Delete User') }}
+                                    </a>
+                                </div>
+                            </div>
+                            <!--- <div class="row py-4">
+                                <div style="display:flex;justify-content:center;align-items:center;">
                                     <a href="{{ route('watch_history') }}" class="btn" style="width:200px;">
                                         {{ __('Watch History') }}
                                     </a>
                                 </div>
-                            </div>
+                            </div> --->
                         </div>
                         @php
                             // Check if the 'visited' session variable is set
