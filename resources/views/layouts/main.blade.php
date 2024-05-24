@@ -334,7 +334,7 @@
             <ul class="flex flex-col md:flex-row items-center">
                 <li>
                     <a href="{{ route('movies.index') }}">
-                        <img class="w-48" viewBox="0 0 96 24" fill="none" src="{{ URL('/logo 1.png') }}"
+                        <img class="w-48" viewBox="0 0 96 24" fill="none" src="/logo 1.png"
                             alt="" />
                     </a>
                 </li>
