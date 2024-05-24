@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Video Streaming</title>
-
+    <link rel="icon" href="/streaming.png" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -382,6 +382,37 @@
             #searchButton:active:enabled {
                 background-color: #c34a00;
             }
+
+            #showMoreButton {
+                display: none;
+                /* Initially hidden */
+                color: black;
+                /* Text color */
+                background-color: #FFFFFF;
+                /* Background color */
+                border: 1px solid black;
+                /* Border */
+                border-radius: 5px;
+                /* Border radius */
+                padding: 5px 10px;
+                /* Padding */
+            }
+
+            #showMoreButton:hover {
+                background-color: orange;
+                /* Change background color on hover to orange */
+                color: white;
+                /* Text color */
+            }
+            .dropdown-item {
+                text-align: center;
+            }
+
+            .dropdown-item:hover {
+                background-color: #900; 
+                /* Change background color on hover */
+                color:white;
+            }
         </style>
 </head>
 
@@ -421,13 +452,13 @@
                                 @guest
                                     @if (Route::has('login'))
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                            <a class="nav-link link" style="cursor: auto;" href="#"></a>
                                         </li>
                                     @endif
 
                                     @if (Route::has('register'))
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                            <a class="nav-link link" style="cursor: auto;" href="#"></a>
                                         </li>
                                     @endif
                                 @else
@@ -504,6 +535,7 @@
 
                                     </div>
                                     <div class="dropdown-content" id="dropdown"></div>
+                                    <button id="showMoreButton">Show More</button>
                                 </div>
                             </div>
 
@@ -530,6 +562,8 @@
 
                             <!-- Speech SDK USAGE -->
                             <script>
+                                const showMoreButton = document.getElementById('showMoreButton');
+
                                 document.getElementById('searchButton').addEventListener('click', function() {
                                     const searchData = document.getElementById('phraseDiv').value.trim();
 
@@ -692,14 +726,24 @@
                                         // Add event listeners to the button for hover effect
                                         showLessButton.addEventListener('mouseenter', function() {
                                             showLessButton.style.backgroundColor = 'orange'; // Change background color on hover to orange
+                                            showLessButton.style.color = 'white'; // Text color
+                                            showLessButton.style.border = '1px solid transparent'; // Border
                                         });
                                         showLessButton.addEventListener('mouseleave', function() {
-                                            showLessButton.style.backgroundColor =
-                                                '#FFFFFF'; // Revert back to original background color on mouse leave
+                                            showLessButton.style.color = 'black'; // Text color
+                                            showLessButton.style.backgroundColor = '#FFFFFF'; // Background color
+                                            showLessButton.style.border = '1px solid black'; // Border
                                         });
                                         showLessButton.addEventListener('click', function() {
-                                            dropdown.innerHTML = ''; // Clear dropdown
                                             dropdown.style.display = 'none'; // Hide the dropdown
+                                            // Show the show more button
+                                            showMoreButton.style.display = 'block';
+                                        });
+
+                                        showMoreButton.addEventListener('click', function() {
+                                            // Assume that `results` is accessible here, otherwise pass it or fetch it again as needed
+                                            dropdown.style.display = 'block'; // Show the dropdown with "No results found" message
+                                            showMoreButton.style.display = 'none'; // Hide the "Show More" button
                                         });
 
                                         // Append the button to the container
@@ -730,12 +774,15 @@
                     // Get the <span> element that closes the modal
                     var span = document.getElementsByClassName("close")[0];
 
+                    const showMoreButton = document.getElementById('showMoreButton');
+
                     // When the user clicks the button, open the modal
                     btn.onclick = function() {
                         modal.style.display = "block";
                         phraseDiv.value = ''; // Clear previous results
                         dropdown.innerHTML = '';
                         dropdown.style.display = 'none'; // Show the dropdown with "No results found" message
+                        showMoreButton.style.display = 'none'; // Hide the "Show More" button
                     }
 
                     // When the user clicks on <span> (x), close the modal
