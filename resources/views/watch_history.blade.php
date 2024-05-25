@@ -167,6 +167,11 @@
                     </tbody>
                 </table>
             </div>
+            <div class="my-4" style="width:100%;display:flex;justify-content:center;align-items:center;color:white;">
+                <div style="padding-left:20px;">
+                    <a href="{{ route('home') }}" class="btn">{{ __('Back') }}</a>
+                </div>
+            </div>
         @else
             <div class="watch-history-container" style="height: 1800px;">
                 <table class="details" id="watchHistoryTable">
