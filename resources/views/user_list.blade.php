@@ -115,11 +115,33 @@
             color: white;
         }
 
+        /* Button Style */
         .btn {
             background-color: #8B0000;
             border-color: #8B0000;
             color: white;
+            width: 200px;
+            display: block;
+            /* Ensure the button takes full width */
+            margin: 0 auto;
+            /* Center the button */
+            margin-bottom: 10px;
+            /* Add some bottom margin */
+            text-align: center;
+            /* Center text within the button */
+            padding: 10px;
+            /* Add padding */
+            border-radius: 5px;
+            /* Add border radius */
+            transition: background-color 0.3s ease;
+            /* Add smooth transition */
         }
+
+        .btn:hover {
+            background-color: #450A0A;
+            border-color: #450A0A;
+        }
+
 
         a.btn:hover {
             background-color: #450A0A;
@@ -127,16 +149,8 @@
             color: white;
         }
 
-        .btn:hover {
-            background-color: #450A0A;
-            /* Darker blue color on hover */
-            color: white;
-        }
-
         .search-input {
             padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
             font-size: 16px;
             width: 250px;
         }
@@ -154,15 +168,23 @@
         .search-button:hover {
             background-color: #450A0A;
         }
+        .container {
+            width: 1200px;
+            /* Set the width to 12000px */
+            margin: 0 auto;
+            /* Center the container horizontally */
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+        }
     </style>
 
-    <div class="container">
+    <div class="container" style="padding:50px;">
         <div style="display: flex; justify-content: space-between; align-items: center;margin-bottom:20px;">
-            <h1>User List</h1>
+            <h1 style="font-size: 2em;">User List</h1>
             <div class="search-container">
                 <form action="{{ route('admin.search') }}" method="GET">
                     <input type="text" name="search" placeholder="Search by Username or Email"
-                        value="{{ request()->input('search') }}" class="search-input">
+                        value="{{ request()->input('search') }}" class="search-input border-b border-transparent bg-black focus:outline-none focus:border-red-400">
                     <button type="submit" class="search-button">Search</button>
                 </form>
             </div>

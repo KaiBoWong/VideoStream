@@ -46,6 +46,8 @@ Route::get('/admin_change-password', [App\Http\Controllers\AdminController::clas
 
 // Route to handle the password change form submission
 Route::post('/admin_change-password', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.change_password.update');
+Route::get('/search_watch_history', [App\Http\Controllers\WatchHistoryController::class, 'search'])->name('search_watch_history');
+
 
 
 

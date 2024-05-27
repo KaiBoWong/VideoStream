@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\WatchHistory;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class WatchHistoryController extends Controller
 {
@@ -51,5 +52,17 @@ class WatchHistoryController extends Controller
         $history->delete();
 
         return redirect()->route('watch_history')->with('success', 'Watch history deleted successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $user = Auth::user();
+        $searchTerm = $request->input('search');
+
+        $watchHistory = WatchHistory::where('username', $user->username)
+            ->where('title', 'like', '%' . $searchTerm . '%')
+            ->paginate(10);
+
+        return view('watch_history', compact('watchHistory'));
     }
 }

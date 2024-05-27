@@ -7,24 +7,37 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Video Streaming</title>
 
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <livewire:styles>
+
+        <!-- Tab Icon -->
         <link rel="icon" href="/streaming.png" type="image/x-icon">
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
         <!-- Swiper's JS -->
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet"
-            href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap' />
         <link rel="stylesheet"
             href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap' />
+
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Font -->
+        <link rel="stylesheet"
+            href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap' />
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+        <!-- Azure Speech Service -->
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-speech-browser-sdk/1.0.0/microsoft.cognitiveservices.speech.sdk.bundle.js">
         </script>
         <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+
+        <!-- Font Awesome CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+        <!-- Scripts Tailwind -->
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
 
         <style>
             body {
@@ -334,8 +347,7 @@
             <ul class="flex flex-col md:flex-row items-center">
                 <li>
                     <a href="{{ route('movies.index') }}">
-                        <img class="w-48" viewBox="0 0 96 24" fill="none" src="/logo 1.png"
-                            alt="" />
+                        <img class="w-48" viewBox="0 0 96 24" fill="none" src="/logo 1.png" alt="" />
                     </a>
                 </li>
                 <li class=" mt-3 md:mt-0">
@@ -442,11 +454,40 @@
         </div>
     </nav>
     @yield('content')
-    <footer class="border border-t border-red-950 bg-red-950">
-        <div class="container mx-auto text-sm px-4 py-6">
-            Powered by <a href="https://www.themoviedb.org/documentation/api"
-                class="underline hover:text-gray-300">TMDb
-                API</a>
+    <footer class="border-red-950 bg-red-950 text-white py-6">
+        <div class="container mx-auto flex flex-wrap justify-between items-center"
+            style="width:1200px;display:flex;justify-content:center;align-items:center;">
+            <div class="w-full md:w-1/2 lg:w-1/4 mb-4 md:mb-0" style="display:fex;justify-content:center;align-items:center;">
+                <a href="{{ route('movies.index') }}">
+                    <img class="w-48" viewBox="0 0 96 24" fill="none" src="/logo 1.png" alt="" />
+                </a>
+            </div>
+            <div class="w-full md:w-1/2 lg:w-1/4 mb-4 md:mb-0">
+                <h2 class="text-xl font-bold mb-4">Quick Links</h2>
+                <ul class="text-sm">
+                    <li><a href="{{ route('movies.index') }}" class="hover:text-red-500">Home</a><a
+                            style="margin-left:20px;" href="{{ route('trend.index') }}"
+                            class="hover:text-red-500">Movies</a><a style="margin-left:20px;"
+                            href="{{ route('tv.index') }}" class="hover:text-red-500">Tv Shows</a></li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/2 lg:w-1/4 mb-4 md:mb-0">
+                <h2 class="text-xl font-bold mb-4">Follow Us</h2>
+                <ul class="text-sm flex">
+                    <li class="mr-4"><a href="#" class="hover:text-red-500"><i
+                                class="fab fa-facebook"></i></a></li>
+                    <li class="mr-4"><a href="#" class="hover:text-red-500"><i
+                                class="fab fa-twitter"></i></a></li>
+                    <li class="mr-4"><a href="#" class="hover:text-red-500"><i
+                                class="fab fa-instagram"></i></a></li>
+                    <li><a href="#" class="hover:text-red-500"><i class="fab fa-youtube"></i></a></li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/2 lg:w-1/4">
+                Powered by <a href="https://www.themoviedb.org/documentation/api"
+                    class="underline hover:text-gray-300">TMDb
+                    API</a>
+            </div>
         </div>
     </footer>
     @yield('scripts')
