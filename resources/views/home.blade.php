@@ -136,7 +136,7 @@
                         @if (!$visited)
                             {{-- Show content for the first visit --}}
                             <script>
-                                alert("Welcome to the Admin page {{ $username }}!");
+                                alert("Welcome, {{ $username }}!");
                             </script>
                         @else
                         @endif

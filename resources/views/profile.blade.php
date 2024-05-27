@@ -82,7 +82,7 @@
         }
     </style>
     <div class='space-x-2 w-full shadow-md rounded-lg mx-auto container'
-        style="background-color:rgba(0, 0, 0, .5); height: 100vh; overflow: auto; padding-top:50px;display:flex;justify-content:center;align-items:center;margin-bottom:50px;">
+        style="background-color:rgba(0, 0, 0, .5); height: 80vh; overflow: auto; padding-top:50px;display:flex;justify-content:center;align-items:center;margin-bottom:50px;">
         <div class="card min-w-sm border transition-shadow shadow-xl hover:shadow-xl min-w-max"
             style="border-color: #450A0A; box-shadow: 0 0 30px #450A0A;">
             <div class="w-full card__media"><img src="/Rectangle 22.png" class="h-48 w-96"></div>
