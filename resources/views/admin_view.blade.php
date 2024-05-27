@@ -12,7 +12,7 @@
             /* Ensure the button takes full width */
             margin: 0 auto;
             /* Center the button */
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             /* Add some bottom margin */
             text-align: center;
             /* Center text within the button */
