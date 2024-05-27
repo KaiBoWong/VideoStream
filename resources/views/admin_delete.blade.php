@@ -174,8 +174,6 @@
             /* Set the width to 12000px */
             margin: 0 auto;
             /* Center the container horizontally */
-            overflow-x: auto;
-            /* Enable horizontal scrolling */
         }
     </style>
 
