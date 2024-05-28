@@ -169,9 +169,9 @@
                     
                     <div class="row mb-4 mt-10" style="display: flex; justify-content: center; align-items: center;">
                         <button type="submit" class="btn btn-primary" style="margin-right: 10px;">
-                            {{ __('Create') }}
+                            {{ __('Register') }}
                         </button>
-                        <a href="{{ route('admin.users.index') }}" class="btn">{{ __('Back') }}</a>
+                        <a href="{{ route('home') }}" class="btn">{{ __('Back') }}</a>
                     </div>
                 </form>
             </div>
