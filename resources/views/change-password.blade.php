@@ -194,7 +194,7 @@
                         style="width:100%;display:flex;justify-content:center;align-items:center;color:white;">
                         <button type="submit" class="btn">{{ __('Change Password') }}</button>
                         <div style="padding-left:20px;">
-                            <a href="{{ route('home') }}" class="btn">{{ __('Cancel') }}</a>
+                            <a href="{{ route('home') }}" class="btn">{{ __('Back') }}</a>
                         </div>
                     </div>
                 </div>
