@@ -23,12 +23,20 @@ class MoviesController extends Controller
     {
         // Retrieve popular movies from the database
         $popularvideo = tv_movies::all();
-        $Movies = tv_movies::where('media_type', 'movie')->get();
+        $Movies = tv_movies::where('media_type', 'movie')
+            ->where('vote_average', '>', 8.5)
+            ->inRandomOrder()
+            ->take(5)
+            ->get();
         $topmovies = tv_movies::where('media_type', 'movie')
             ->where('release_date', '<', '2019-01-01')
             ->orderBy('vote_average', 'desc')
             ->get();
-        $poptv = tv_movies::where('media_type', 'tv')->get();
+        $poptv = tv_movies::where('media_type', 'tv')
+                ->where('vote_average', '>', 8.5)
+                ->inRandomOrder()
+                ->take(5)
+                ->get();
         $toptv = tv_movies::where('media_type', 'tv')
             ->whereBetween('release_date', ['1990-01-01', '2019-01-01'])
             ->where('vote_average', 8.5) // Make sure to use a number, not a string
