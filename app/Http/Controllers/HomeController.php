@@ -69,6 +69,12 @@ class HomeController extends Controller
             return back()->withInput()->with('error', 'Your current password does not match our records.');
         }
 
+         // Check if the new password is the same as the old one
+         if (Hash::check($request->new_password, $user->password)) {
+            // If the new password is the same as the old one, return with an error message
+            return back()->withInput()->with('error', 'New password cannot be the same as the old password.');
+        }
+
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->new_password)
         ]);

@@ -60,6 +60,20 @@
                 <span class="text-white font-semibold text-2xl">RESET PASSWORD</span>
             </div>
 
+            @if (session('success'))
+                <script>
+                    if (confirm("{{ session('success') }}")) {}
+                </script>
+            @endif
+
+            @if (session('error'))
+                <script>
+                    if (confirm("{{ session('error') }}")) {
+
+                    }
+                </script>
+            @endif
+
             <form method="POST" action="{{ route('password.update') }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
@@ -75,18 +89,18 @@
                     @enderror
                 </label>
 
-                <label for="password" class="block">
+                <label for="newpassword" class="block">
                     <div class="relative">
-                        <input name="password" type="password"
-                            class="text-white mt-1 block w-full px-3 py-2 border-b border-transparent bg-black focus:outline-none focus:border-red-400 form-control @error('current_password') is-invalid @enderror"
-                            id="password" required autocomplete="password" placeholder="New Password"><i
+                        <input name="new_password" type="password"
+                            class="text-white mt-1 block w-full px-3 py-2 border-b border-transparent bg-black focus:outline-none focus:border-red-400 form-control @error('new_password') is-invalid @enderror"
+                            id="new_password" required autocomplete="new_password" placeholder="New Password"><i
                             class="fas fa-eye fa-lg absolute top-0 right-0 mt-3 mr-3 text-white hover:text-red-500 cursor-pointer"
                             id="togglePassword"></i>
                     </div>
                     <script>
                         $(document).ready(function() {
                             $('#togglePassword').click(function() {
-                                var passwordField = $('#password');
+                                var passwordField = $('#new_password');
                                 var passwordFieldType = passwordField.attr('type');
 
                                 if (passwordFieldType === 'password') {
@@ -99,27 +113,25 @@
                             });
                         });
                     </script>
-
-                    @error('password')
+                    @error('new_password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </label>
-
-                <label for="password-confirm" class="block">
+                <label for="new_password_confirmation" class="block">
                     <div class="relative">
-                        <input name="password-confirm" type="password"
-                            class="text-white mt-1 block w-full px-3 py-2 border-b border-transparent bg-black focus:outline-none focus:border-red-400 form-control @error('current_password') is-invalid @enderror"
-                            id="password-confirm" required autocomplete="password-confirm"
-                            placeholder="Confirmation Password"><i
+                        <input name="new_password_confirmation" type="password"
+                            class="text-white mt-1 block w-full px-3 py-2 border-b border-transparent bg-black focus:outline-none focus:border-red-400 form-control @error('new_password_confirmation') is-invalid @enderror"
+                            id="new_password_confirmation" required autocomplete="new_password_confirmation"
+                            placeholder="New Password Confirmation"><i
                             class="fas fa-eye fa-lg absolute top-0 right-0 mt-3 mr-3 text-white hover:text-red-500 cursor-pointer"
                             id="togglePassword1"></i>
                     </div>
                     <script>
                         $(document).ready(function() {
                             $('#togglePassword1').click(function() {
-                                var passwordField = $('#password-confirm');
+                                var passwordField = $('#new_password_confirmation');
                                 var passwordFieldType = passwordField.attr('type');
 
                                 if (passwordFieldType === 'password') {
@@ -132,8 +144,7 @@
                             });
                         });
                     </script>
-
-                    @error('password-confirm')
+                    @error('new_password_confirmation')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -141,8 +152,7 @@
                 </label>
 
                 <div class="flex justify-center items-center mb-0 mt-10">
-                    <button type="submit"
-                    class="btn mr-4">
+                    <button type="submit" class="btn mr-4">
                         {{ __('Reset Password') }}
                     </button>
                     <a style="width:100px;" href="{{ route('home') }}" class="btn">{{ __('Back') }}</a>
