@@ -63,4 +63,4 @@ jobs:
           app-name: 'VideoStream'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ACAB5A63E7CA4F578C1A3B71B42D914D }}
